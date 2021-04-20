@@ -26,9 +26,11 @@ jobs:
         run: |
            echo "Building project"
            sleep 10
+           cat $GITHUB_EVENT_PATH
            echo "Done"
   test:
     runs-on: ubuntu-18.04
+    if: contains(github.event.issue.labels.*.name, 'ready-to-test')
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
