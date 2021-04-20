@@ -19,6 +19,7 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-18.04
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ready-to-test')
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
@@ -30,7 +31,7 @@ jobs:
            echo "Done"
   test:
     runs-on: ubuntu-18.04
-    if: contains(github.event.issue.labels.*.name, 'ready-to-test')
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ready-to-test')
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
